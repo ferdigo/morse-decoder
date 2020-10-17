@@ -39,15 +39,35 @@ const MORSE_TABLE = {
 
 function decode(expr) {
 
-
     let arr =[]
     
-    console.log(expr.length)
-  
-  arr = expr.match(/.{1,10}/g)
-    
-
-  console.log(arr)
+    let result = [];
+    let item = "";
+    let final = "";
+   
+    arr = expr.match(/.{1,10}/g);
+   
+    arr.forEach((element) => {
+     item = element.slice(element.indexOf(1, 0));
+     result.push(item);
+    });
+   
+    result.forEach((element) => {
+     if (element === "*") {
+      final += " ";
+     } else {
+      let start = "";
+   
+      for (let i = 0; i <= element.length; i = i + 2) {
+       if (element.substring(i, i + 2) === "10") start += ".";
+       else if (element.substring(i, i + 2) === "11") start += "-";
+      }
+   
+      final += MORSE_TABLE[start];
+     }
+    });
+   
+    return final;
 }
 
 module.exports = {
